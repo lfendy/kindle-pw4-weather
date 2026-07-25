@@ -148,12 +148,15 @@ def build_hourly_svg(hourly_data: List[dict], n: int) -> str:
         temp = str(item["temp"])
         t = fmt_hour(item["time"])
         icon_x = x - 50
+        rain = item.get("rain")
+        rain_chance = f'{rain["chance"]}%' if rain and rain.get("chance") is not None else ""
         parts.append(f"""    <g>
       <text x="{x}" y="471" font-size="32" font-weight="bold" font-family="sans-serif" text-anchor="middle">{t}</text>
       <g transform="translate({icon_x}, 518) scale(1.0)">
         <use href="#{iid}"/>
       </g>
-      <text x="{x}" y="661" font-size="32" font-weight="bold" font-family="sans-serif" text-anchor="middle">{temp}C</text>
+      <text x="{x}" y="651" font-size="28" font-family="sans-serif" text-anchor="middle">{rain_chance}</text>
+      <text x="{x}" y="689" font-size="32" font-weight="bold" font-family="sans-serif" text-anchor="middle">{temp}C</text>
     </g>""")
     return "\n".join(parts)
 
